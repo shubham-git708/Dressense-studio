@@ -18,8 +18,8 @@ const Index = () => {
         <Navigation />
         
         <main className="container mx-auto px-4 py-8">
-          {/* Hero Section */}
-          <div className="text-center max-w-3xl mx-auto my-12">
+          {/* Hero Section with Animation */}
+          <div className="text-center max-w-3xl mx-auto my-16 animate-fade-in">
             <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
               Your AI Stylist, Tailored to Your Body
             </h1>
@@ -29,28 +29,40 @@ const Index = () => {
           </div>
           
           {/* Body Image Upload */}
-          <BodyImageUploader />
+          <div className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
+            <BodyImageUploader />
+          </div>
           
           {/* Mood Selector */}
-          <MoodSelector />
+          <div className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
+            <MoodSelector />
+          </div>
           
           {/* Outfit Recommendations */}
-          <OutfitRecommendations />
+          <div className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
+            <OutfitRecommendations />
+          </div>
           
-          {/* Virtual Closet */}
-          <VirtualCloset />
-          
-          {/* AI Stats */}
-          <AIStats />
+          {/* AI Stats with Tabs */}
+          <div className="animate-fade-in" style={{ animationDelay: "0.4s" }}>
+            <AIStats />
+          </div>
           
           {/* Extension Promo */}
-          <ExtensionPromo />
+          <div className="animate-fade-in" style={{ animationDelay: "0.5s" }}>
+            <ExtensionPromo />
+          </div>
+          
+          {/* Virtual Closet */}
+          <div className="animate-fade-in" style={{ animationDelay: "0.6s" }}>
+            <VirtualCloset />
+          </div>
         </main>
         
         <Footer />
         
-        {/* Floating Action Button */}
-        <button className="floating-action-btn">
+        {/* Floating Action Button with Animation */}
+        <button className="floating-action-btn animate-bounce">
           <Camera size={24} />
         </button>
       </div>
