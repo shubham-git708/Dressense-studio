@@ -50,7 +50,7 @@ export function OutfitRecommendations() {
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredOutfits.map((outfit) => (
-          <div key={outfit.id} className="outfit-card animate-fade-in">
+          <div key={outfit.id} className="outfit-card animate-fade-in bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all">
             <div className="relative">
               <img 
                 src={outfit.image} 

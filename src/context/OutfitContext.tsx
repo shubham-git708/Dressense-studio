@@ -26,7 +26,7 @@ interface OutfitContextType {
 
 const OutfitContext = createContext<OutfitContextType | undefined>(undefined);
 
-// Sample outfit data
+// Sample outfit data with Unsplash images
 const sampleOutfits: Outfit[] = [
   {
     id: "1",
@@ -38,7 +38,7 @@ const sampleOutfits: Outfit[] = [
       shoes: "Brown leather loafers",
       accessories: ["Silver watch", "Leather belt"]
     },
-    image: "/placeholder.svg"
+    image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
   },
   {
     id: "2",
@@ -50,7 +50,7 @@ const sampleOutfits: Outfit[] = [
       shoes: "Black Chelsea boots",
       accessories: ["Minimalist watch"]
     },
-    image: "/placeholder.svg"
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
   },
   {
     id: "3",
@@ -62,7 +62,7 @@ const sampleOutfits: Outfit[] = [
       shoes: "White sneakers",
       accessories: ["Sunglasses"]
     },
-    image: "/placeholder.svg"
+    image: "https://images.unsplash.com/photo-1500673922987-e212871fec22?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
   }
 ];
 
@@ -82,6 +82,7 @@ export const OutfitProvider = ({ children }: { children: ReactNode }) => {
     
     // Simulate loading time
     setTimeout(() => {
+      // Create a new outfit with a real image
       const newOutfit: Outfit = {
         id: `outfit-${Date.now()}`,
         name: `${occasion.charAt(0).toUpperCase() + occasion.slice(1)} Look`,
@@ -92,7 +93,7 @@ export const OutfitProvider = ({ children }: { children: ReactNode }) => {
           shoes: "Generated shoes",
           accessories: ["Generated accessory"]
         },
-        image: "/placeholder.svg"
+        image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
       };
       
       setOutfits((prev) => [newOutfit, ...prev]);
