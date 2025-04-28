@@ -46,55 +46,57 @@ export function OutfitRecommendations() {
 
   return (
     <div className="w-full my-8">
-      <h2 className="text-2xl font-display font-medium mb-6">Personalized Recommendations</h2>
+      <h2 className="text-3xl font-display font-medium mb-10 text-center">Personalized Recommendations</h2>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredOutfits.map((outfit) => (
-          <div key={outfit.id} className="outfit-card animate-fade-in bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all">
-            <div className="relative">
+          <div key={outfit.id} className="group relative h-[500px] overflow-hidden bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-500 animate-fade-in">
+            <div className="relative h-full">
               <img 
                 src={outfit.image} 
                 alt={outfit.name} 
-                className="w-full aspect-[3/4] object-cover"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute top-4 right-4 flex gap-2">
-                <button 
-                  onClick={handleSave} 
-                  className="p-2 bg-white rounded-full shadow hover:bg-outfit-light-gray"
-                >
-                  <Heart size={20} />
-                </button>
-              </div>
-            </div>
-            
-            <div className="p-4">
-              <h3 className="text-xl font-display font-medium">{outfit.name}</h3>
+              <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
-              <div className="mt-3 space-y-2 text-sm">
-                <div><span className="font-semibold">Top:</span> {outfit.items.top}</div>
-                <div><span className="font-semibold">Bottom:</span> {outfit.items.bottom}</div>
-                <div><span className="font-semibold">Shoes:</span> {outfit.items.shoes}</div>
-                {outfit.items.accessories && outfit.items.accessories.length > 0 && (
-                  <div>
-                    <span className="font-semibold">Accessories:</span> {outfit.items.accessories.join(", ")}
-                  </div>
-                )}
-              </div>
+              {/* Floating save button */}
+              <button 
+                onClick={handleSave} 
+                className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-md hover:bg-outfit-light-gray transition-colors duration-300"
+              >
+                <Heart size={20} />
+              </button>
               
-              <div className="mt-4 flex gap-2">
-                <Button 
-                  onClick={handleTryOn}
-                  className="outfit-btn-primary flex-1"
-                >
-                  <ShoppingBag size={18} className="mr-2" /> Try On
-                </Button>
-                <Button 
-                  onClick={handleShare}
-                  variant="outline"
-                  className="outfit-btn-outline"
-                >
-                  <Share2 size={18} />
-                </Button>
+              {/* Outfit info overlay - appears on hover */}
+              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent text-white transform translate-y-2 opacity-90 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+                <h3 className="text-2xl font-display font-medium mb-2">{outfit.name}</h3>
+                
+                <div className="mt-3 space-y-1 text-sm opacity-90">
+                  <div><span className="font-semibold">Top:</span> {outfit.items.top}</div>
+                  <div><span className="font-semibold">Bottom:</span> {outfit.items.bottom}</div>
+                  <div><span className="font-semibold">Shoes:</span> {outfit.items.shoes}</div>
+                  {outfit.items.accessories && outfit.items.accessories.length > 0 && (
+                    <div>
+                      <span className="font-semibold">Accessories:</span> {outfit.items.accessories.join(", ")}
+                    </div>
+                  )}
+                </div>
+                
+                <div className="mt-4 flex gap-2">
+                  <Button 
+                    onClick={handleTryOn}
+                    className="bg-white text-black hover:bg-opacity-90 flex-1"
+                  >
+                    <ShoppingBag size={18} className="mr-2" /> Try On
+                  </Button>
+                  <Button 
+                    onClick={handleShare}
+                    variant="outline"
+                    className="text-white border-white hover:bg-white hover:bg-opacity-20"
+                  >
+                    <Share2 size={18} />
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

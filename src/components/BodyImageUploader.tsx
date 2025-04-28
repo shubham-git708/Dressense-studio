@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Upload, X, Check, Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -10,6 +10,7 @@ export function BodyImageUploader() {
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const { toast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -38,6 +39,21 @@ export function BodyImageUploader() {
     if (e.target.files && e.target.files[0]) {
       handleFile(e.target.files[0]);
     }
+  };
+
+  const handleButtonClick = () => {
+    // Trigger the file input click
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleTakePhoto = () => {
+    toast({
+      title: "Camera activated",
+      description: "Allow camera access to take a photo",
+    });
+    // In a real implementation, this would trigger the device camera
   };
 
   const handleFile = (file: File) => {
@@ -124,19 +140,25 @@ export function BodyImageUploader() {
             <input
               type="file"
               id="image-upload"
+              ref={fileInputRef}
               className="hidden"
               accept="image/*"
               onChange={handleChange}
             />
             
             <div className="flex gap-4">
-              <label htmlFor="image-upload">
-                <Button className="outfit-btn-primary cursor-pointer">
-                  Upload Image
-                </Button>
-              </label>
+              <Button 
+                onClick={handleButtonClick} 
+                className="outfit-btn-primary cursor-pointer"
+              >
+                Upload Image
+              </Button>
               
-              <Button variant="outline" className="outfit-btn-outline">
+              <Button 
+                variant="outline" 
+                className="outfit-btn-outline"
+                onClick={handleTakePhoto}
+              >
                 <Camera size={18} className="mr-2" /> Take Photo
               </Button>
             </div>

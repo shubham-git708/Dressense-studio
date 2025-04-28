@@ -97,7 +97,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-medium;
+    @apply font-display font-medium tracking-tight;
   }
 
   .outfit-card {
@@ -118,5 +118,57 @@
 
   .floating-action-btn {
     @apply fixed bottom-6 right-6 bg-outfit-blue text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all hover:bg-opacity-90;
+  }
+  
+  /* Kellig.fr inspired styles */
+  .kellig-section {
+    @apply py-24;
+  }
+  
+  .kellig-heading {
+    @apply text-3xl md:text-4xl lg:text-5xl font-display font-medium leading-tight mb-6;
+  }
+  
+  .kellig-card {
+    @apply bg-white overflow-hidden transition-all duration-500;
+  }
+  
+  .kellig-image {
+    @apply w-full h-full object-cover transition-transform duration-700 hover:scale-105;
+  }
+  
+  .kellig-overlay {
+    @apply absolute inset-0 bg-black bg-opacity-30 opacity-0 hover:opacity-100 transition-opacity duration-300;
+  }
+  
+  /* Animation classes */
+  .fade-up {
+    @apply opacity-0 translate-y-8;
+    animation: fadeUp 0.8s forwards;
+  }
+  
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .stagger-fade > * {
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+  }
+  
+  .stagger-fade > *:nth-child(1) { animation-delay: 0.1s; }
+  .stagger-fade > *:nth-child(2) { animation-delay: 0.2s; }
+  .stagger-fade > *:nth-child(3) { animation-delay: 0.3s; }
+  .stagger-fade > *:nth-child(4) { animation-delay: 0.4s; }
+  .stagger-fade > *:nth-child(5) { animation-delay: 0.5s; }
+  .stagger-fade > *:nth-child(6) { animation-delay: 0.6s; }
+  
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
   }
 }

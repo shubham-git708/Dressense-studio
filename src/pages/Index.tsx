@@ -10,6 +10,7 @@ import { VirtualCloset } from "@/components/VirtualCloset";
 import { AIStats } from "@/components/AIStats";
 import { Footer } from "@/components/Footer";
 import { Camera } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Index = () => {
   return (
@@ -17,45 +18,62 @@ const Index = () => {
       <div className="min-h-screen bg-outfit-white">
         <Navigation />
         
-        <main className="container mx-auto px-4 py-8">
-          {/* Hero Section with Animation */}
-          <div className="text-center max-w-3xl mx-auto my-16 animate-fade-in">
-            <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
-              Your AI Stylist, Tailored to Your Body
-            </h1>
-            <p className="text-xl text-outfit-gray">
-              Get personalized outfit recommendations based on your body type, style preferences, and mood.
-            </p>
+        {/* Fullwidth hero banner with large, high-quality image */}
+        <div className="w-full h-[70vh] bg-cover bg-center relative" 
+             style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80")' }}>
+          <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+            <div className="text-center max-w-3xl mx-auto px-4 text-white animate-fade-in">
+              <h1 className="text-4xl md:text-6xl font-display font-bold mb-4 leading-tight">
+                Your AI Stylist, Tailored to Your Body
+              </h1>
+              <p className="text-xl md:text-2xl text-gray-100">
+                Get personalized outfit recommendations based on your body type, style preferences, and mood.
+              </p>
+            </div>
           </div>
+        </div>
+        
+        <main className="container mx-auto px-4 py-12">
+          {/* Main content tabs */}
+          <Tabs defaultValue="stylist" className="w-full">
+            <TabsList className="w-full max-w-lg mx-auto grid grid-cols-4 mb-8">
+              <TabsTrigger value="stylist">AI Stylist</TabsTrigger>
+              <TabsTrigger value="mood">Your Mood</TabsTrigger>
+              <TabsTrigger value="outfits">Outfits</TabsTrigger>
+              <TabsTrigger value="closet">Closet</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="stylist">
+              <div className="animate-fade-in mb-16">
+                <BodyImageUploader />
+              </div>
+              <div className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
+                <AIStats />
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="mood">
+              <div className="animate-fade-in">
+                <MoodSelector />
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="outfits">
+              <div className="animate-fade-in">
+                <OutfitRecommendations />
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="closet">
+              <div className="animate-fade-in">
+                <VirtualCloset />
+              </div>
+            </TabsContent>
+          </Tabs>
           
-          {/* Body Image Upload */}
-          <div className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
-            <BodyImageUploader />
-          </div>
-          
-          {/* Mood Selector */}
-          <div className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            <MoodSelector />
-          </div>
-          
-          {/* Outfit Recommendations */}
-          <div className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
-            <OutfitRecommendations />
-          </div>
-          
-          {/* AI Stats with Tabs */}
-          <div className="animate-fade-in" style={{ animationDelay: "0.4s" }}>
-            <AIStats />
-          </div>
-          
-          {/* Extension Promo */}
-          <div className="animate-fade-in" style={{ animationDelay: "0.5s" }}>
+          {/* Extension Promo - below tabs */}
+          <div className="animate-fade-in mt-16" style={{ animationDelay: "0.4s" }}>
             <ExtensionPromo />
-          </div>
-          
-          {/* Virtual Closet */}
-          <div className="animate-fade-in" style={{ animationDelay: "0.6s" }}>
-            <VirtualCloset />
           </div>
         </main>
         

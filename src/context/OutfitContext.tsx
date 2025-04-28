@@ -26,7 +26,7 @@ interface OutfitContextType {
 
 const OutfitContext = createContext<OutfitContextType | undefined>(undefined);
 
-// Sample outfit data with Unsplash images
+// Outfit data with high-quality Unsplash images
 const sampleOutfits: Outfit[] = [
   {
     id: "1",
@@ -38,7 +38,7 @@ const sampleOutfits: Outfit[] = [
       shoes: "Brown leather loafers",
       accessories: ["Silver watch", "Leather belt"]
     },
-    image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+    image: "https://images.unsplash.com/photo-1521341057461-6eb5f40b07ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
   },
   {
     id: "2",
@@ -50,7 +50,7 @@ const sampleOutfits: Outfit[] = [
       shoes: "Black Chelsea boots",
       accessories: ["Minimalist watch"]
     },
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+    image: "https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
   },
   {
     id: "3",
@@ -62,7 +62,43 @@ const sampleOutfits: Outfit[] = [
       shoes: "White sneakers",
       accessories: ["Sunglasses"]
     },
-    image: "https://images.unsplash.com/photo-1500673922987-e212871fec22?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+    image: "https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    id: "4",
+    name: "Workout Ready",
+    occasion: "casual",
+    items: {
+      top: "Performance athletic tee",
+      bottom: "Running shorts",
+      shoes: "Training sneakers",
+      accessories: ["Fitness tracker"]
+    },
+    image: "https://images.unsplash.com/photo-1483721310020-03333e577078?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    id: "5",
+    name: "Office Formal",
+    occasion: "work",
+    items: {
+      top: "White dress shirt",
+      bottom: "Charcoal dress pants",
+      shoes: "Black Oxford shoes",
+      accessories: ["Silk tie", "Leather belt"]
+    },
+    image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    id: "6",
+    name: "Dinner Date",
+    occasion: "date",
+    items: {
+      top: "Navy blazer with white shirt",
+      bottom: "Tailored trousers",
+      shoes: "Leather dress shoes",
+      accessories: ["Pocket square"]
+    },
+    image: "https://images.unsplash.com/photo-1617137968427-85924c800a22?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
   }
 ];
 
@@ -82,6 +118,13 @@ export const OutfitProvider = ({ children }: { children: ReactNode }) => {
     
     // Simulate loading time
     setTimeout(() => {
+      // Random high-quality outfit images from Unsplash
+      const outfitImages = [
+        "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+      ];
+      
       // Create a new outfit with a real image
       const newOutfit: Outfit = {
         id: `outfit-${Date.now()}`,
@@ -93,7 +136,7 @@ export const OutfitProvider = ({ children }: { children: ReactNode }) => {
           shoes: "Generated shoes",
           accessories: ["Generated accessory"]
         },
-        image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+        image: outfitImages[Math.floor(Math.random() * outfitImages.length)]
       };
       
       setOutfits((prev) => [newOutfit, ...prev]);
