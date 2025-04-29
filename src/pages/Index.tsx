@@ -25,21 +25,53 @@ const Index = () => {
       <div className="min-h-screen bg-outfit-white">
         <Navigation />
         
-        {/* Fullwidth hero banner with large, high-quality image */}
+        {/* Fullwidth hero banner with animated fashion icon */}
         <div 
-          className="w-full h-[70vh] bg-cover bg-center relative scroll-parallax" 
+          className="w-full h-[70vh] bg-cover bg-center relative overflow-hidden scroll-parallax" 
           data-speed="0.1"
-          style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1483118714900-540cf339fd46?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=90")' }}
         >
-          <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+          {/* Animated background with fashion models */}
+          <div 
+            className="absolute inset-0 bg-center bg-cover transition-transform duration-30000 animate-slow-pan" 
+            style={{ 
+              backgroundImage: 'url("https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=90")',
+              animation: 'slow-zoom 30s infinite alternate'
+            }}
+          ></div>
+          
+          {/* Overlay with animated gradient */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 flex items-center justify-center">
             <div className="text-center max-w-3xl mx-auto px-4 text-white scroll-fade">
               <h1 className="text-4xl md:text-6xl font-display font-bold mb-4 leading-tight">
                 Your AI Stylist, Tailored to Your Body
               </h1>
-              <p className="text-xl md:text-2xl text-gray-100">
+              <p className="text-xl md:text-2xl text-gray-100 mb-8">
                 Get personalized outfit recommendations based on your body type, style preferences, and mood.
               </p>
+              
+              {/* Animated element */}
+              <div className="animate-bounce inline-block bg-[#9b87f5] rounded-full p-3 shadow-lg">
+                <Camera size={24} className="text-white" />
+              </div>
             </div>
+          </div>
+          
+          {/* Animated particles for fashion-forward feel */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {[...Array(10)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute rounded-full bg-white/30 animate-float"
+                style={{
+                  width: `${Math.random() * 10 + 5}px`,
+                  height: `${Math.random() * 10 + 5}px`,
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animationDuration: `${Math.random() * 10 + 10}s`,
+                  animationDelay: `${Math.random() * 5}s`
+                }}
+              ></div>
+            ))}
           </div>
         </div>
         
@@ -94,6 +126,49 @@ const Index = () => {
           <Camera size={24} />
         </button>
       </div>
+      
+      {/* Add some global animation keyframes */}
+      <style jsx global>{`
+        @keyframes slow-zoom {
+          0% {
+            transform: scale(1);
+          }
+          100% {
+            transform: scale(1.2);
+          }
+        }
+        
+        @keyframes slow-pan {
+          0% {
+            background-position: 0% 50%;
+          }
+          100% {
+            background-position: 100% 50%;
+          }
+        }
+        
+        @keyframes float {
+          0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 0;
+          }
+          50% {
+            opacity: 0.8;
+          }
+          100% {
+            transform: translateY(-100vh) rotate(360deg);
+            opacity: 0;
+          }
+        }
+        
+        .animate-slow-pan {
+          animation: slow-pan 30s ease-in-out infinite alternate;
+        }
+        
+        .animate-float {
+          animation: float 20s linear infinite;
+        }
+      `}</style>
     </OutfitProvider>
   );
 };

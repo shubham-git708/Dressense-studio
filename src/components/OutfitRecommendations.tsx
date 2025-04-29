@@ -1,11 +1,11 @@
 
-import React from "react";
-import { Heart, ShoppingBag, Share2, Loader } from "lucide-react";
+import React, { useState } from "react";
+import { Heart, ShoppingBag, Share2, Loader, Filter, Sparkles } from "lucide-react";
 import { useOutfitContext } from "@/context/OutfitContext";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
-// High-quality outfit images from Unsplash
+// High-quality outfit images from fashion websites
 const hdOutfitImages = [
   {
     id: "casual-1",
@@ -17,7 +17,8 @@ const hdOutfitImages = [
       bottom: "Slim Fit Black Jeans",
       shoes: "Casual White Sneakers",
       accessories: ["Minimal Watch", "Silver Bracelet"]
-    }
+    },
+    brand: "Zara"
   },
   {
     id: "casual-2",
@@ -29,31 +30,34 @@ const hdOutfitImages = [
       bottom: "Dark Blue Jeans",
       shoes: "Canvas Sneakers",
       accessories: ["Leather Bracelet"]
-    }
+    },
+    brand: "H&M"
   },
   {
-    id: "formal-1",
+    id: "work-1",
     image: "https://images.unsplash.com/photo-1621072156002-e2fccdc0b176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
     name: "Business Class",
-    occasion: "formal",
+    occasion: "work",
     items: {
       top: "Tailored Blazer & White Shirt",
       bottom: "Fitted Trousers",
       shoes: "Leather Oxfords",
       accessories: ["Tie", "Pocket Square", "Cufflinks"]
-    }
+    },
+    brand: "Boss"
   },
   {
-    id: "formal-2",
+    id: "work-2",
     image: "https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
     name: "Modern Elegance",
-    occasion: "formal",
+    occasion: "work",
     items: {
       top: "Navy Suit Jacket",
       bottom: "Matching Suit Pants",
       shoes: "Brown Derby Shoes",
       accessories: ["Silk Tie", "Leather Belt"]
-    }
+    },
+    brand: "Calvin Klein"
   },
   {
     id: "party-1",
@@ -65,7 +69,8 @@ const hdOutfitImages = [
       bottom: "Distressed Jeans",
       shoes: "Chelsea Boots",
       accessories: ["Leather Jacket", "Statement Watch"]
-    }
+    },
+    brand: "AllSaints"
   },
   {
     id: "party-2",
@@ -77,31 +82,34 @@ const hdOutfitImages = [
       bottom: "Black Slim Fit Jeans",
       shoes: "Fashion Sneakers",
       accessories: ["Minimalist Necklace"]
-    }
+    },
+    brand: "Topman"
   },
   {
-    id: "sporty-1",
+    id: "workout-1",
     image: "https://images.unsplash.com/photo-1594381898411-846e7d193883?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
     name: "Active Lifestyle",
-    occasion: "sporty",
+    occasion: "workout",
     items: {
       top: "Performance T-shirt",
       bottom: "Running Shorts",
       shoes: "Athletic Trainers",
       accessories: ["Sports Watch", "Fitness Tracker"]
-    }
+    },
+    brand: "Nike"
   },
   {
-    id: "sporty-2",
+    id: "workout-2",
     image: "https://images.unsplash.com/photo-1616257266927-6ed9536c0f96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
     name: "Urban Athlete",
-    occasion: "sporty",
+    occasion: "workout",
     items: {
       top: "Zip-up Hoodie",
       bottom: "Track Pants",
       shoes: "High-top Sneakers",
       accessories: ["Cap", "Wireless Earbuds"]
-    }
+    },
+    brand: "Adidas"
   },
   {
     id: "date-1",
@@ -113,17 +121,62 @@ const hdOutfitImages = [
       bottom: "Khaki Chinos",
       shoes: "Suede Desert Boots",
       accessories: ["Leather Watch", "Braided Belt"]
-    }
+    },
+    brand: "J.Crew"
+  },
+  {
+    id: "date-2",
+    image: "https://images.unsplash.com/photo-1617113930975-f9c7243ae527?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    name: "Romantic Evening",
+    occasion: "date",
+    items: {
+      top: "Black Turtleneck",
+      bottom: "Fitted Pants",
+      shoes: "Loafers",
+      accessories: ["Minimalist Watch", "Cologne"]
+    },
+    brand: "COS"
+  },
+  {
+    id: "special-1",
+    image: "https://images.unsplash.com/photo-1507114845806-0347040042f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    name: "Gala Ready",
+    occasion: "special",
+    items: {
+      top: "Tuxedo Jacket",
+      bottom: "Matching Pants",
+      shoes: "Patent Leather Shoes",
+      accessories: ["Bow Tie", "Cufflinks", "Pocket Square"]
+    },
+    brand: "Armani"
+  },
+  {
+    id: "vacation-1",
+    image: "https://images.unsplash.com/photo-1598898457345-a2b032cf7f3d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    name: "Beach Getaway",
+    occasion: "vacation",
+    items: {
+      top: "Linen Shirt",
+      bottom: "Swim Shorts",
+      shoes: "Leather Sandals",
+      accessories: ["Sunglasses", "Woven Hat"]
+    },
+    brand: "Orlebar Brown"
   }
 ];
 
 export function OutfitRecommendations() {
   const { outfits = [], currentMood = "casual", isGenerating = false } = useOutfitContext();
+  const [selectedFilter, setSelectedFilter] = useState("all");
+  const [selectedSeason, setSelectedSeason] = useState("all");
 
   // Filter outfits based on current mood/occasion
   // Use our HD outfit images, or fall back to context outfits if available
   const filteredOutfits = hdOutfitImages.filter(
-    (outfit) => outfit.occasion === currentMood
+    (outfit) => {
+      if (selectedFilter !== "all" && outfit.brand.toLowerCase() !== selectedFilter) return false;
+      return outfit.occasion === currentMood;
+    }
   );
 
   // If no outfits match the current mood in our HD images, use any from that mood
@@ -160,11 +213,54 @@ export function OutfitRecommendations() {
     );
   }
 
+  const uniqueBrands = Array.from(new Set(hdOutfitImages.map(outfit => outfit.brand.toLowerCase())));
+
   return (
     <div className="w-full my-8">
-      <h2 className="text-3xl font-display font-medium mb-10 text-center">Personalized Recommendations</h2>
+      <h2 className="text-3xl font-display font-medium mb-4 text-center">Personalized Recommendations</h2>
+      <p className="text-outfit-gray text-center mb-8">Discover curated outfits from top brands based on your style preferences</p>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {/* Filters section */}
+      <div className="flex flex-wrap justify-between items-center mb-8">
+        <div className="flex items-center mb-4 sm:mb-0">
+          <Filter size={20} className="text-outfit-gray mr-2" />
+          <span className="text-outfit-black font-medium mr-4">Filters:</span>
+          
+          <div className="flex flex-wrap gap-2">
+            <button 
+              className={`px-3 py-1 text-sm rounded-full ${selectedFilter === 'all' ? 'bg-[#9b87f5] text-white' : 'bg-outfit-light-gray text-outfit-gray'}`}
+              onClick={() => setSelectedFilter('all')}
+            >
+              All Brands
+            </button>
+            
+            {uniqueBrands.slice(0, 3).map(brand => (
+              <button 
+                key={brand}
+                className={`px-3 py-1 text-sm rounded-full ${selectedFilter === brand ? 'bg-[#9b87f5] text-white' : 'bg-outfit-light-gray text-outfit-gray'}`}
+                onClick={() => setSelectedFilter(brand)}
+              >
+                {brand.charAt(0).toUpperCase() + brand.slice(1)}
+              </button>
+            ))}
+            
+            <button className="px-3 py-1 text-sm rounded-full bg-outfit-light-gray text-outfit-gray">
+              More +
+            </button>
+          </div>
+        </div>
+        
+        <Button 
+          variant="outline" 
+          className="text-[#9b87f5] border-[#9b87f5]"
+          onClick={() => toast.success("AI customization activated!")}
+        >
+          <Sparkles size={16} className="mr-2" />
+          AI Customize
+        </Button>
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 scroll-fade">
         {displayOutfits.map((outfit) => (
           <div key={outfit.id} className="group relative h-[500px] overflow-hidden bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-500 animate-fade-in">
             <div className="relative h-full">
@@ -174,6 +270,12 @@ export function OutfitRecommendations() {
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="absolute top-4 left-4">
+                <span className="bg-white px-2 py-1 text-xs font-medium rounded shadow-sm">
+                  {outfit.brand}
+                </span>
+              </div>
               
               {/* Floating save button */}
               <button 

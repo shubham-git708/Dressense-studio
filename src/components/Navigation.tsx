@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Menu, X, User, Bell, Search, ShoppingBag, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,57 +19,115 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
-// SVG Logo component for the dripped out llama
-const LlamaLogo = () => (
-  <svg 
-    width="40" 
-    height="40" 
-    viewBox="0 0 40 40" 
-    fill="none" 
-    xmlns="http://www.w3.org/2000/svg"
-    className="mr-2"
-  >
-    <path
-      d="M20 5C12.268 5 6 11.268 6 19C6 24.6 9.3 29.4 14 31.7V35H26V31.7C30.7 29.4 34 24.6 34 19C34 11.268 27.732 5 20 5Z"
-      fill="#9b87f5"
-    />
-    <path
-      d="M16 15C16 16.1 15.1 17 14 17C12.9 17 12 16.1 12 15C12 13.9 12.9 13 14 13C15.1 13 16 13.9 16 15Z"
-      fill="white"
-    />
-    <path
-      d="M26 15C26 16.1 25.1 17 24 17C22.9 17 22 16.1 22 15C22 13.9 22.9 13 24 13C25.1 13 26 13.9 26 15Z"
-      fill="white"
-    />
-    <path
-      d="M20 25C22.2091 25 24 23.2091 24 21H16C16 23.2091 17.7909 25 20 25Z"
-      fill="white"
-    />
-    <path
-      d="M30 14C30 12.3 28.7 11 27 11C27 9.3 25.7 8 24 8C22.3 8 21 9.3 21 11H19C19 9.3 17.7 8 16 8C14.3 8 13 9.3 13 11C11.3 11 10 12.3 10 14C10 15.7 11.3 17 13 17H27C28.7 17 30 15.7 30 14Z"
-      fill="#7E69AB"
-      opacity="0.7"
-    />
-    <path
-      d="M10 19L8 24M30 19L32 24"
-      stroke="#7E69AB"
-      strokeWidth="2"
-      strokeLinecap="round"
-    />
-    <path
-      d="M17 32L15 37M23 32L25 37"
-      stroke="#7E69AB"
-      strokeWidth="2"
-      strokeLinecap="round"
-    />
-  </svg>
-);
+// Animated SVG Logo component for the dripped out llama
+const LlamaLogo = () => {
+  const [isAnimating, setIsAnimating] = useState(false);
+  
+  useEffect(() => {
+    // Animate logo periodically
+    const interval = setInterval(() => {
+      setIsAnimating(true);
+      setTimeout(() => setIsAnimating(false), 1000);
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, []);
+  
+  return (
+    <svg 
+      width="40" 
+      height="40" 
+      viewBox="0 0 40 40" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+      className={`mr-2 transition-transform duration-1000 ${isAnimating ? 'animate-bounce' : ''}`}
+      onMouseEnter={() => setIsAnimating(true)}
+      onMouseLeave={() => setTimeout(() => setIsAnimating(false), 1000)}
+    >
+      {/* Llama Body */}
+      <path
+        d="M20 5C12.268 5 6 11.268 6 19C6 24.6 9.3 29.4 14 31.7V35H26V31.7C30.7 29.4 34 24.6 34 19C34 11.268 27.732 5 20 5Z"
+        fill="#9b87f5"
+        className={`transition-all duration-500 ${isAnimating ? 'fill-[#8B5CF6]' : 'fill-[#9b87f5]'}`}
+      />
+      
+      {/* Llama Eyes */}
+      <path
+        d="M16 15C16 16.1 15.1 17 14 17C12.9 17 12 16.1 12 15C12 13.9 12.9 13 14 13C15.1 13 16 13.9 16 15Z"
+        fill="white"
+        className={`transition-all duration-300 ${isAnimating ? 'scale-110' : ''}`}
+      />
+      <path
+        d="M26 15C26 16.1 25.1 17 24 17C22.9 17 22 16.1 22 15C22 13.9 22.9 13 24 13C25.1 13 26 13.9 26 15Z"
+        fill="white"
+        className={`transition-all duration-300 ${isAnimating ? 'scale-110' : ''}`}
+      />
+      
+      {/* Llama Smile */}
+      <path
+        d="M20 25C22.2091 25 24 23.2091 24 21H16C16 23.2091 17.7909 25 20 25Z"
+        fill="white"
+        className={`transition-all duration-500 ${isAnimating ? 'transform translate-y-[1px]' : ''}`}
+      />
+      
+      {/* Llama Hat/Style */}
+      <path
+        d="M30 14C30 12.3 28.7 11 27 11C27 9.3 25.7 8 24 8C22.3 8 21 9.3 21 11H19C19 9.3 17.7 8 16 8C14.3 8 13 9.3 13 11C11.3 11 10 12.3 10 14C10 15.7 11.3 17 13 17H27C28.7 17 30 15.7 30 14Z"
+        fill="#7E69AB"
+        opacity="0.7"
+        className={`transition-all duration-500 ${isAnimating ? 'transform rotate-3' : ''}`}
+      />
+      
+      {/* Llama Drip/Bling */}
+      <path
+        d="M10 19L8 24M30 19L32 24"
+        stroke="#7E69AB"
+        strokeWidth="2"
+        strokeLinecap="round"
+        className={`transition-all duration-500 ${isAnimating ? 'stroke-[#9b87f5] stroke-[3]' : ''}`}
+      />
+      
+      <path
+        d="M17 32L15 37M23 32L25 37"
+        stroke="#7E69AB"
+        strokeWidth="2"
+        strokeLinecap="round"
+        className={`transition-all duration-500 ${isAnimating ? 'stroke-[#9b87f5] stroke-[3]' : ''}`}
+      />
+      
+      {/* Sparkle effect when animated */}
+      {isAnimating && (
+        <>
+          <circle cx="8" cy="12" r="1" fill="white" className="animate-ping opacity-75" />
+          <circle cx="32" cy="12" r="1" fill="white" className="animate-ping opacity-75" />
+          <circle cx="20" cy="7" r="1" fill="white" className="animate-ping opacity-75" />
+        </>
+      )}
+    </svg>
+  );
+};
 
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
+    <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? "bg-white shadow-md" : "bg-white/80 backdrop-blur-md"}`}>
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
