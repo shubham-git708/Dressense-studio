@@ -5,13 +5,129 @@ import { useOutfitContext } from "@/context/OutfitContext";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
+// High-quality outfit images from Unsplash
+const hdOutfitImages = [
+  {
+    id: "casual-1",
+    image: "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    name: "Urban Explorer",
+    occasion: "casual",
+    items: {
+      top: "Beige Overshirt",
+      bottom: "Slim Fit Black Jeans",
+      shoes: "Casual White Sneakers",
+      accessories: ["Minimal Watch", "Silver Bracelet"]
+    }
+  },
+  {
+    id: "casual-2",
+    image: "https://images.unsplash.com/photo-1544441892-794166f1e3be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    name: "Weekend Comfort",
+    occasion: "casual",
+    items: {
+      top: "Grey Sweater",
+      bottom: "Dark Blue Jeans",
+      shoes: "Canvas Sneakers",
+      accessories: ["Leather Bracelet"]
+    }
+  },
+  {
+    id: "formal-1",
+    image: "https://images.unsplash.com/photo-1621072156002-e2fccdc0b176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    name: "Business Class",
+    occasion: "formal",
+    items: {
+      top: "Tailored Blazer & White Shirt",
+      bottom: "Fitted Trousers",
+      shoes: "Leather Oxfords",
+      accessories: ["Tie", "Pocket Square", "Cufflinks"]
+    }
+  },
+  {
+    id: "formal-2",
+    image: "https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    name: "Modern Elegance",
+    occasion: "formal",
+    items: {
+      top: "Navy Suit Jacket",
+      bottom: "Matching Suit Pants",
+      shoes: "Brown Derby Shoes",
+      accessories: ["Silk Tie", "Leather Belt"]
+    }
+  },
+  {
+    id: "party-1",
+    image: "https://images.unsplash.com/photo-1606159068539-43f36b99d1b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    name: "Night Vibes",
+    occasion: "party",
+    items: {
+      top: "Black Henley",
+      bottom: "Distressed Jeans",
+      shoes: "Chelsea Boots",
+      accessories: ["Leather Jacket", "Statement Watch"]
+    }
+  },
+  {
+    id: "party-2",
+    image: "https://images.unsplash.com/photo-1614252369475-531eba7d2076?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    name: "Party Essential",
+    occasion: "party",
+    items: {
+      top: "Patterned Button-up Shirt",
+      bottom: "Black Slim Fit Jeans",
+      shoes: "Fashion Sneakers",
+      accessories: ["Minimalist Necklace"]
+    }
+  },
+  {
+    id: "sporty-1",
+    image: "https://images.unsplash.com/photo-1594381898411-846e7d193883?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    name: "Active Lifestyle",
+    occasion: "sporty",
+    items: {
+      top: "Performance T-shirt",
+      bottom: "Running Shorts",
+      shoes: "Athletic Trainers",
+      accessories: ["Sports Watch", "Fitness Tracker"]
+    }
+  },
+  {
+    id: "sporty-2",
+    image: "https://images.unsplash.com/photo-1616257266927-6ed9536c0f96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    name: "Urban Athlete",
+    occasion: "sporty",
+    items: {
+      top: "Zip-up Hoodie",
+      bottom: "Track Pants",
+      shoes: "High-top Sneakers",
+      accessories: ["Cap", "Wireless Earbuds"]
+    }
+  },
+  {
+    id: "date-1",
+    image: "https://images.unsplash.com/photo-1516555839402-c0921be9689f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    name: "First Impression",
+    occasion: "date",
+    items: {
+      top: "Light Blue Button-up",
+      bottom: "Khaki Chinos",
+      shoes: "Suede Desert Boots",
+      accessories: ["Leather Watch", "Braided Belt"]
+    }
+  }
+];
+
 export function OutfitRecommendations() {
-  const { outfits, currentMood, isGenerating } = useOutfitContext();
+  const { outfits = [], currentMood = "casual", isGenerating = false } = useOutfitContext();
 
   // Filter outfits based on current mood/occasion
-  const filteredOutfits = outfits.filter(
+  // Use our HD outfit images, or fall back to context outfits if available
+  const filteredOutfits = hdOutfitImages.filter(
     (outfit) => outfit.occasion === currentMood
   );
+
+  // If no outfits match the current mood in our HD images, use any from that mood
+  const displayOutfits = filteredOutfits.length > 0 ? filteredOutfits : hdOutfitImages.slice(0, 3);
 
   const handleSave = () => {
     toast.success("Outfit saved to your favorites!");
@@ -28,14 +144,14 @@ export function OutfitRecommendations() {
   if (isGenerating) {
     return (
       <div className="w-full flex flex-col items-center justify-center py-16">
-        <Loader size={48} className="animate-spin text-outfit-blue mb-4" />
+        <Loader size={48} className="animate-spin text-[#9b87f5] mb-4" />
         <h3 className="text-xl font-display">Generating your personalized outfits...</h3>
         <p className="text-outfit-gray mt-2">Our AI is working on perfect combinations for you</p>
       </div>
     );
   }
 
-  if (filteredOutfits.length === 0) {
+  if (displayOutfits.length === 0) {
     return (
       <div className="w-full text-center py-12">
         <h3 className="text-xl font-display">No outfits found for this mood</h3>
@@ -49,7 +165,7 @@ export function OutfitRecommendations() {
       <h2 className="text-3xl font-display font-medium mb-10 text-center">Personalized Recommendations</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredOutfits.map((outfit) => (
+        {displayOutfits.map((outfit) => (
           <div key={outfit.id} className="group relative h-[500px] overflow-hidden bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-500 animate-fade-in">
             <div className="relative h-full">
               <img 

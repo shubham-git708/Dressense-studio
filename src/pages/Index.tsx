@@ -29,7 +29,7 @@ const Index = () => {
         <div 
           className="w-full h-[70vh] bg-cover bg-center relative scroll-parallax" 
           data-speed="0.1"
-          style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80")' }}
+          style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1483118714900-540cf339fd46?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=90")' }}
         >
           <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
             <div className="text-center max-w-3xl mx-auto px-4 text-white scroll-fade">
@@ -49,7 +49,7 @@ const Index = () => {
             <TabsList className="w-full max-w-lg mx-auto grid grid-cols-4 mb-8 scroll-fade">
               <TabsTrigger value="stylist">AI Stylist</TabsTrigger>
               <TabsTrigger value="mood">Your Mood</TabsTrigger>
-              <TabsTrigger value="outfits">Outfits</TabsTrigger>
+              <TabsTrigger value="outfits">Style Ideas</TabsTrigger>
               <TabsTrigger value="closet">Closet</TabsTrigger>
             </TabsList>
             
@@ -90,7 +90,7 @@ const Index = () => {
         <Footer />
         
         {/* Floating Action Button with Animation */}
-        <button className="floating-action-btn animate-bounce">
+        <button className="floating-action-btn animate-bounce bg-[#9b87f5] hover:bg-[#8B5CF6]">
           <Camera size={24} />
         </button>
       </div>
