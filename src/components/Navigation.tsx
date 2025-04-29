@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Menu, X, User, Bell, Search, ShoppingBag, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,89 +17,136 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { toast } from "sonner";
 
-// Animated SVG Logo component for the dripped out llama
-const LlamaLogo = () => {
+// Animated Cute Llama Logo component
+const CuteLlamaLogo = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   
   useEffect(() => {
     // Animate logo periodically
     const interval = setInterval(() => {
       setIsAnimating(true);
-      setTimeout(() => setIsAnimating(false), 1000);
-    }, 5000);
+      setTimeout(() => setIsAnimating(false), 1500);
+    }, 8000);
     
     return () => clearInterval(interval);
   }, []);
   
   return (
     <svg 
-      width="40" 
-      height="40" 
-      viewBox="0 0 40 40" 
+      width="45" 
+      height="45" 
+      viewBox="0 0 45 45" 
       fill="none" 
       xmlns="http://www.w3.org/2000/svg"
-      className={`mr-2 transition-transform duration-1000 ${isAnimating ? 'animate-bounce' : ''}`}
+      className={`mr-2 transition-all duration-1000 ${isAnimating ? 'animate-bounce' : ''}`}
       onMouseEnter={() => setIsAnimating(true)}
       onMouseLeave={() => setTimeout(() => setIsAnimating(false), 1000)}
     >
-      {/* Llama Body */}
+      {/* Llama Body with rounder shape */}
       <path
-        d="M20 5C12.268 5 6 11.268 6 19C6 24.6 9.3 29.4 14 31.7V35H26V31.7C30.7 29.4 34 24.6 34 19C34 11.268 27.732 5 20 5Z"
-        fill="#9b87f5"
-        className={`transition-all duration-500 ${isAnimating ? 'fill-[#8B5CF6]' : 'fill-[#9b87f5]'}`}
+        d="M22 8C14.268 8 8 14.268 8 22C8 27.6 11.3 32.4 16 34.7V38H28V34.7C32.7 32.4 36 27.6 36 22C36 14.268 29.732 8 22 8Z"
+        fill={isAnimating ? "#8B5CF6" : "#9b87f5"}
+        className="transition-all duration-500"
       />
       
-      {/* Llama Eyes */}
-      <path
-        d="M16 15C16 16.1 15.1 17 14 17C12.9 17 12 16.1 12 15C12 13.9 12.9 13 14 13C15.1 13 16 13.9 16 15Z"
+      {/* Cute big Llama Eyes */}
+      <ellipse
+        cx="16"
+        cy="19"
+        rx="3"
+        ry={isAnimating ? "3.5" : "3"}
         fill="white"
-        className={`transition-all duration-300 ${isAnimating ? 'scale-110' : ''}`}
+        className="transition-all duration-300"
       />
-      <path
-        d="M26 15C26 16.1 25.1 17 24 17C22.9 17 22 16.1 22 15C22 13.9 22.9 13 24 13C25.1 13 26 13.9 26 15Z"
+      <ellipse
+        cx="28"
+        cy="19"
+        rx="3"
+        ry={isAnimating ? "3.5" : "3"}
         fill="white"
-        className={`transition-all duration-300 ${isAnimating ? 'scale-110' : ''}`}
+        className="transition-all duration-300"
       />
       
-      {/* Llama Smile */}
+      {/* Cute pupils that move when animated */}
+      <circle
+        cx={isAnimating ? "15.5" : "16"}
+        cy={isAnimating ? "18.5" : "19"}
+        r="1.5"
+        fill="black"
+        className="transition-all duration-300"
+      />
+      <circle
+        cx={isAnimating ? "27.5" : "28"}
+        cy={isAnimating ? "18.5" : "19"}
+        r="1.5"
+        fill="black"
+        className="transition-all duration-300"
+      />
+      
+      {/* Cute blush circles that appear when animated */}
+      <circle
+        cx="14"
+        cy="22"
+        r="1.5"
+        fill="#FFB6C1"
+        opacity={isAnimating ? "0.8" : "0"}
+        className="transition-all duration-500"
+      />
+      <circle
+        cx="30"
+        cy="22"
+        r="1.5"
+        fill="#FFB6C1"
+        opacity={isAnimating ? "0.8" : "0"}
+        className="transition-all duration-500"
+      />
+      
+      {/* Llama Smile that changes with animation */}
       <path
-        d="M20 25C22.2091 25 24 23.2091 24 21H16C16 23.2091 17.7909 25 20 25Z"
+        d={isAnimating 
+          ? "M18 26C20.2091 26 24.2091 26 26 26C26 28.2091 24.2091 30 22 30C19.7909 30 18 28.2091 18 26Z" 
+          : "M18 25C20.2091 25 24.2091 25 26 25C26 27.2091 24.2091 29 22 29C19.7909 29 18 27.2091 18 25Z"}
         fill="white"
-        className={`transition-all duration-500 ${isAnimating ? 'transform translate-y-[1px]' : ''}`}
+        className="transition-all duration-500"
       />
       
-      {/* Llama Hat/Style */}
+      {/* Llama Cute Hat */}
       <path
-        d="M30 14C30 12.3 28.7 11 27 11C27 9.3 25.7 8 24 8C22.3 8 21 9.3 21 11H19C19 9.3 17.7 8 16 8C14.3 8 13 9.3 13 11C11.3 11 10 12.3 10 14C10 15.7 11.3 17 13 17H27C28.7 17 30 15.7 30 14Z"
-        fill="#7E69AB"
-        opacity="0.7"
-        className={`transition-all duration-500 ${isAnimating ? 'transform rotate-3' : ''}`}
+        d="M30 15C30 13.3 28.7 12 27 12C27 10.3 25.7 9 24 9C22.3 9 21 10.3 21 12H19C19 10.3 17.7 9 16 9C14.3 9 13 10.3 13 12C11.3 12 10 13.3 10 15C10 16.7 11.3 18 13 18H27C28.7 18 30 16.7 30 15Z"
+        fill="#D6BCFA"
+        opacity="0.9"
+        transform={isAnimating ? "translate(0, -1) rotate(3deg)" : ""}
+        className="transition-all duration-500"
       />
       
-      {/* Llama Drip/Bling */}
+      {/* Llama Ears */}
       <path
-        d="M10 19L8 24M30 19L32 24"
+        d="M12 14L8 8M32 14L36 8"
         stroke="#7E69AB"
         strokeWidth="2"
         strokeLinecap="round"
-        className={`transition-all duration-500 ${isAnimating ? 'stroke-[#9b87f5] stroke-[3]' : ''}`}
+        className={`transition-all duration-500 ${isAnimating ? 'stroke-[#9b87f5]' : ''}`}
       />
       
+      {/* Llama Fashion Accessories - appears when animated */}
       <path
-        d="M17 32L15 37M23 32L25 37"
-        stroke="#7E69AB"
+        d="M22 34V36M18 34L17 37M26 34L27 37"
+        stroke="#D6BCFA"
         strokeWidth="2"
         strokeLinecap="round"
-        className={`transition-all duration-500 ${isAnimating ? 'stroke-[#9b87f5] stroke-[3]' : ''}`}
+        opacity={isAnimating ? "1" : "0"}
+        className="transition-all duration-500"
       />
       
-      {/* Sparkle effect when animated */}
+      {/* Sparkle effects when animated */}
       {isAnimating && (
         <>
-          <circle cx="8" cy="12" r="1" fill="white" className="animate-ping opacity-75" />
-          <circle cx="32" cy="12" r="1" fill="white" className="animate-ping opacity-75" />
-          <circle cx="20" cy="7" r="1" fill="white" className="animate-ping opacity-75" />
+          <circle cx="10" cy="13" r="1" fill="white" className="animate-ping opacity-75" />
+          <circle cx="34" cy="13" r="1" fill="white" className="animate-ping opacity-75" />
+          <circle cx="22" cy="5" r="1" fill="#FFD700" className="animate-ping opacity-75" />
+          <path d="M22 1L22.7 3.5H25.3L23.3 5L24 7.5L22 6L20 7.5L20.7 5L18.7 3.5H21.3L22 1Z" fill="#FFD700" opacity="0.7" className="animate-pulse" />
         </>
       )}
     </svg>
@@ -133,7 +179,7 @@ export function Navigation() {
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <LlamaLogo />
+              <CuteLlamaLogo />
               <span className="text-2xl font-display font-semibold text-outfit-black">
                 Drip<span className="text-[#9b87f5]">Fit</span>
               </span>
@@ -221,7 +267,10 @@ export function Navigation() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link to="/" className={navigationMenuTriggerStyle()}>
+                <Link to="/" 
+                  className={navigationMenuTriggerStyle()}
+                  onClick={() => toast("Extension functionality can be accessed from the extension section below")}
+                >
                   Extension
                 </Link>
               </NavigationMenuItem>
@@ -230,15 +279,24 @@ export function Navigation() {
 
           {/* User actions */}
           <div className="hidden lg:flex items-center space-x-4">
-            <button className="p-2 rounded-full text-outfit-gray hover:text-outfit-black hover:bg-outfit-light-gray transition-colors">
+            <button 
+              className="p-2 rounded-full text-outfit-gray hover:text-outfit-black hover:bg-outfit-light-gray transition-colors"
+              onClick={() => toast("Search functionality coming soon!")}
+            >
               <Search size={20} />
             </button>
             
-            <button className="p-2 rounded-full text-outfit-gray hover:text-outfit-black hover:bg-outfit-light-gray transition-colors">
+            <button 
+              className="p-2 rounded-full text-outfit-gray hover:text-outfit-black hover:bg-outfit-light-gray transition-colors"
+              onClick={() => toast("Added to favorites!")}
+            >
               <Heart size={20} />
             </button>
             
-            <button className="p-2 rounded-full text-outfit-gray hover:text-outfit-black hover:bg-outfit-light-gray transition-colors">
+            <button 
+              className="p-2 rounded-full text-outfit-gray hover:text-outfit-black hover:bg-outfit-light-gray transition-colors"
+              onClick={() => toast("No new notifications")}
+            >
               <Bell size={20} />
             </button>
             
@@ -249,14 +307,22 @@ export function Navigation() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56 bg-white">
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>My Outfits</DropdownMenuItem>
-                <DropdownMenuItem>Sign out</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => toast("Profile page coming soon")}>Profile</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => toast("Settings page coming soon")}>Settings</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => toast("My Outfits page coming soon")}>My Outfits</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => toast("Signed out successfully")}>Sign out</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
             
-            <Button className="outfit-btn-primary bg-[#9b87f5] hover:bg-[#8B5CF6]">
+            <Button 
+              className="outfit-btn-primary bg-[#9b87f5] hover:bg-[#8B5CF6]"
+              onClick={() => {
+                toast("Browser extension installation started");
+                setTimeout(() => {
+                  toast("DripFit extension installed successfully!");
+                }, 2000);
+              }}
+            >
               Get Extension
             </Button>
           </div>
@@ -316,28 +382,40 @@ export function Navigation() {
                 </div>
               </div>
               
-              <Link to="/" className="block py-3 px-4 text-outfit-black hover:text-[#9b87f5] hover:bg-outfit-light-gray rounded-md">
+              <Link 
+                to="/" 
+                className="block py-3 px-4 text-outfit-black hover:text-[#9b87f5] hover:bg-outfit-light-gray rounded-md"
+                onClick={() => toast("Extension functionality can be accessed from the extension section below")}
+              >
                 Extension
               </Link>
             </nav>
             
             <div className="pt-4 border-t border-outfit-light-gray flex space-x-2">
-              <Button variant="ghost" size="icon" className="rounded-full">
+              <Button variant="ghost" size="icon" className="rounded-full" onClick={() => toast("Search functionality coming soon!")}>
                 <Search size={20} />
               </Button>
-              <Button variant="ghost" size="icon" className="rounded-full">
+              <Button variant="ghost" size="icon" className="rounded-full" onClick={() => toast("Added to favorites!")}>
                 <Heart size={20} />
               </Button>
-              <Button variant="ghost" size="icon" className="rounded-full">
+              <Button variant="ghost" size="icon" className="rounded-full" onClick={() => toast("No new notifications")}>
                 <Bell size={20} />
               </Button>
-              <Button variant="ghost" size="icon" className="rounded-full">
+              <Button variant="ghost" size="icon" className="rounded-full" onClick={() => toast("Profile page coming soon")}>
                 <User size={20} />
               </Button>
             </div>
             
             <div>
-              <Button className="w-full bg-[#9b87f5] hover:bg-[#8B5CF6]">
+              <Button 
+                className="w-full bg-[#9b87f5] hover:bg-[#8B5CF6]"
+                onClick={() => {
+                  toast("Browser extension installation started");
+                  setTimeout(() => {
+                    toast("DripFit extension installed successfully!");
+                  }, 2000);
+                }}
+              >
                 Get Extension
               </Button>
             </div>

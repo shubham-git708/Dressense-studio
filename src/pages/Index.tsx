@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { OutfitProvider } from "@/context/OutfitContext";
 import { Navigation } from "@/components/Navigation";
 import { MoodSelector } from "@/components/MoodSelector";
@@ -9,9 +9,10 @@ import { ExtensionPromo } from "@/components/ExtensionPromo";
 import { VirtualCloset } from "@/components/VirtualCloset";
 import { AIStats } from "@/components/AIStats";
 import { Footer } from "@/components/Footer";
-import { Camera } from "lucide-react";
+import { Camera, ShoppingBag } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { setupScrollAnimations } from "@/utils/scrollAnimation";
+import { toast } from "sonner";
 
 const Index = () => {
   // Initialize scroll animations when component mounts
@@ -19,6 +20,16 @@ const Index = () => {
     const cleanup = setupScrollAnimations();
     return cleanup;
   }, []);
+
+  const [activeTab, setActiveTab] = useState("stylist");
+
+  // Function to handle camera button click
+  const handleCameraClick = () => {
+    // Scroll to the AI Stylist tab and activate it
+    setActiveTab("stylist");
+    document.getElementById("stylist-section")?.scrollIntoView({ behavior: "smooth" });
+    toast("Camera activated! Upload an image to analyze your outfit.");
+  };
 
   return (
     <OutfitProvider>
@@ -49,10 +60,13 @@ const Index = () => {
                 Get personalized outfit recommendations based on your body type, style preferences, and mood.
               </p>
               
-              {/* Animated element */}
-              <div className="animate-bounce inline-block bg-[#9b87f5] rounded-full p-3 shadow-lg">
+              {/* Animated element - make it functional */}
+              <button 
+                onClick={handleCameraClick}
+                className="animate-bounce inline-block bg-[#9b87f5] hover:bg-[#8B5CF6] rounded-full p-3 shadow-lg transition-all cursor-pointer"
+              >
                 <Camera size={24} className="text-white" />
-              </div>
+              </button>
             </div>
           </div>
           
@@ -77,7 +91,13 @@ const Index = () => {
         
         <main className="container mx-auto px-4 py-12">
           {/* Main content tabs */}
-          <Tabs defaultValue="stylist" className="w-full">
+          <Tabs 
+            defaultValue="stylist" 
+            className="w-full" 
+            value={activeTab} 
+            onValueChange={setActiveTab}
+            id="stylist-section"
+          >
             <TabsList className="w-full max-w-lg mx-auto grid grid-cols-4 mb-8 scroll-fade">
               <TabsTrigger value="stylist">AI Stylist</TabsTrigger>
               <TabsTrigger value="mood">Your Mood</TabsTrigger>
@@ -121,8 +141,11 @@ const Index = () => {
         
         <Footer />
         
-        {/* Floating Action Button with Animation */}
-        <button className="floating-action-btn animate-bounce bg-[#9b87f5] hover:bg-[#8B5CF6] fixed bottom-6 right-6 p-4 rounded-full shadow-lg text-white z-50">
+        {/* Floating Action Button with Animation - make it functional */}
+        <button 
+          onClick={handleCameraClick}
+          className="floating-action-btn animate-bounce bg-[#9b87f5] hover:bg-[#8B5CF6] fixed bottom-6 right-6 p-4 rounded-full shadow-lg text-white z-50 cursor-pointer"
+        >
           <Camera size={24} />
         </button>
       </div>
