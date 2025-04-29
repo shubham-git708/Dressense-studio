@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from "react";
 import { Upload, X, Check, Camera, Scissors } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,7 +12,7 @@ export function BodyImageUploader() {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSeparating, setIsSeparating] = useState(false);
-  const { toast } = useToast();
+  const { toast: toastFromHook } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { addItemToCloset } = useOutfitContext();
 
@@ -54,7 +53,7 @@ export function BodyImageUploader() {
   };
 
   const handleTakePhoto = () => {
-    toast({
+    toastFromHook({
       title: "Camera activated",
       description: "Allow camera access to take a photo",
     });
@@ -64,7 +63,7 @@ export function BodyImageUploader() {
   const handleFile = (file: File) => {
     // Check if file is an image
     if (!file.type.match('image.*')) {
-      toast({
+      toastFromHook({
         title: "Invalid file type",
         description: "Please upload an image file (JPEG, PNG, etc.)",
         variant: "destructive",
@@ -131,7 +130,7 @@ export function BodyImageUploader() {
         
         setIsSeparating(false);
         
-        toast.success("Outfit successfully separated into top and bottom wear!");
+        toast("Outfit successfully separated into top and bottom wear!");
       }, 1000);
     }, 2000);
   };
@@ -149,7 +148,7 @@ export function BodyImageUploader() {
     setIsSeparating(true);
     
     // Simulate AI separation specifically for tops
-    toast({
+    toastFromHook({
       title: "Processing tops",
       description: "AI is detecting and extracting top wear from your image",
     });
@@ -163,7 +162,7 @@ export function BodyImageUploader() {
       });
       
       setIsSeparating(false);
-      toast({
+      toastFromHook({
         title: "Top extracted successfully",
         description: "The detected top has been added to your closet",
       });
@@ -176,7 +175,7 @@ export function BodyImageUploader() {
     setIsSeparating(true);
     
     // Simulate AI separation specifically for bottoms
-    toast({
+    toastFromHook({
       title: "Processing bottoms",
       description: "AI is detecting and extracting bottom wear from your image",
     });
@@ -190,7 +189,7 @@ export function BodyImageUploader() {
       });
       
       setIsSeparating(false);
-      toast({
+      toastFromHook({
         title: "Bottom extracted successfully",
         description: "The detected bottom has been added to your closet",
       });

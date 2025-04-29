@@ -128,7 +128,7 @@ const Index = () => {
       </div>
       
       {/* Add some global animation keyframes */}
-      <style jsx global>{`
+      <style>{`
         @keyframes slow-zoom {
           0% {
             transform: scale(1);
