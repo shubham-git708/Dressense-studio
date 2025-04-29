@@ -1,16 +1,19 @@
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Upload, X, Check, Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
+import { useOutfitContext } from "@/context/OutfitContext";
 
 export function BodyImageUploader() {
   const [dragActive, setDragActive] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { addItemToCloset } = useOutfitContext();
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -82,25 +85,56 @@ export function BodyImageUploader() {
         const imageUrl = URL.createObjectURL(file);
         setUploadedImage(imageUrl);
         
-        toast({
-          title: "Image uploaded successfully",
-          description: "Your body image has been uploaded to train your AI model",
-          variant: "default",
-        });
+        // Start processing the image to extract clothing items
+        processImage(imageUrl, file.name);
       }
     }, 200);
+  };
+
+  const processImage = (imageUrl: string, fileName: string) => {
+    setIsProcessing(true);
+    
+    // Simulate AI processing to extract clothing items
+    setTimeout(() => {
+      // In a real implementation, this would use computer vision to detect clothing items
+      // For now, we'll simulate detecting a top and adding it to the closet
+      
+      const itemName = fileName.replace(/\.[^/.]+$/, ""); // Remove file extension
+      
+      // Determine random category (top, bottom, shoes, accessories)
+      const categories = ["tops", "bottoms", "shoes", "accessories"];
+      const category = categories[Math.floor(Math.random() * categories.length)];
+      
+      // Add the extracted item to the closet
+      addItemToCloset({
+        id: `item-${Date.now()}`,
+        name: `${itemName.charAt(0).toUpperCase() + itemName.slice(1)}`,
+        category,
+        image: imageUrl,
+      });
+      
+      setIsProcessing(false);
+      
+      toast({
+        title: "Item added to your closet",
+        description: `We've added the detected ${category.slice(0, -1)} to your Virtual Closet tab`,
+        variant: "default",
+      });
+    }, 2000);
   };
 
   const handleRemoveImage = () => {
     setUploadedImage(null);
     setUploadProgress(null);
+    setIsProcessing(false);
   };
 
   return (
-    <div className="w-full my-8 bg-white rounded-xl shadow p-6">
+    <div className="w-full my-8 bg-white rounded-xl shadow p-6 scroll-fade">
       <h2 className="text-2xl font-display font-medium mb-4">Train Your AI Stylist</h2>
       <p className="text-outfit-gray mb-6">
         Upload a full-body image to create your personalized AI model that understands your proportions and style preferences.
+        We'll automatically extract clothing items and add them to your virtual closet.
       </p>
       
       {uploadedImage ? (
@@ -118,8 +152,17 @@ export function BodyImageUploader() {
           </button>
           
           <div className="mt-4 bg-outfit-light-gray rounded-lg p-4 flex items-center">
-            <Check size={20} className="text-green-500 mr-2" />
-            <span className="text-sm">Your AI model is being trained with this image</span>
+            {isProcessing ? (
+              <>
+                <div className="animate-spin mr-2 w-5 h-5 border-2 border-outfit-blue border-t-transparent rounded-full"></div>
+                <span className="text-sm">Analyzing your image and extracting items...</span>
+              </>
+            ) : (
+              <>
+                <Check size={20} className="text-green-500 mr-2" />
+                <span className="text-sm">Your AI model is being trained with this image</span>
+              </>
+            )}
           </div>
         </div>
       ) : (

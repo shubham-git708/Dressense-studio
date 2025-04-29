@@ -8,6 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Link } from "react-router-dom";
 
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -18,27 +19,27 @@ export function Navigation() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <a href="/" className="flex items-center">
+            <Link to="/" className="flex items-center">
               <span className="text-2xl font-display font-semibold text-outfit-black">
                 Chic<span className="text-outfit-blue">Fit</span>
               </span>
-            </a>
+            </Link>
           </div>
 
           {/* Desktop navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#" className="text-outfit-black hover:text-outfit-blue transition-colors">
+            <Link to="/" className="text-outfit-black hover:text-outfit-blue transition-colors">
               Discover
-            </a>
-            <a href="#" className="text-outfit-black hover:text-outfit-blue transition-colors">
+            </Link>
+            <Link to="/" className="text-outfit-black hover:text-outfit-blue transition-colors">
               My Closet
-            </a>
-            <a href="#" className="text-outfit-black hover:text-outfit-blue transition-colors">
+            </Link>
+            <Link to="/" className="text-outfit-black hover:text-outfit-blue transition-colors">
               Style Ideas
-            </a>
-            <a href="#" className="text-outfit-black hover:text-outfit-blue transition-colors">
+            </Link>
+            <Link to="/" className="text-outfit-black hover:text-outfit-blue transition-colors">
               Extension
-            </a>
+            </Link>
           </nav>
 
           {/* User actions */}
@@ -61,7 +62,7 @@ export function Navigation() {
                   <User size={20} />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent align="end" className="w-56 bg-white">
                 <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuItem>Settings</DropdownMenuItem>
                 <DropdownMenuItem>My Outfits</DropdownMenuItem>
@@ -90,18 +91,18 @@ export function Navigation() {
       {mobileMenuOpen && (
         <div className="md:hidden bg-white border-t border-outfit-light-gray">
           <div className="container mx-auto px-4 py-4 space-y-4">
-            <a href="#" className="block py-2 text-outfit-black hover:text-outfit-blue">
+            <Link to="/" className="block py-2 text-outfit-black hover:text-outfit-blue">
               Discover
-            </a>
-            <a href="#" className="block py-2 text-outfit-black hover:text-outfit-blue">
+            </Link>
+            <Link to="/" className="block py-2 text-outfit-black hover:text-outfit-blue">
               My Closet
-            </a>
-            <a href="#" className="block py-2 text-outfit-black hover:text-outfit-blue">
+            </Link>
+            <Link to="/" className="block py-2 text-outfit-black hover:text-outfit-blue">
               Style Ideas
-            </a>
-            <a href="#" className="block py-2 text-outfit-black hover:text-outfit-blue">
+            </Link>
+            <Link to="/" className="block py-2 text-outfit-black hover:text-outfit-blue">
               Extension
-            </a>
+            </Link>
             <div className="pt-4 border-t border-outfit-light-gray">
               <Button className="outfit-btn-primary w-full">
                 Get Extension

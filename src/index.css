@@ -171,4 +171,60 @@
       opacity: 1;
     }
   }
+
+  /* New taikisato.com inspired scroll animations */
+  .scroll-fade {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .scroll-fade.animate-fade-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .scroll-slide {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .scroll-slide.animate-slide-in-right {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .scroll-scale {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .scroll-scale.animate-scale-in {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .parallax-active {
+    transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  /* Horizontal scroll container */
+  .horizontal-scroll {
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scroll-behavior: smooth;
+  }
+
+  .horizontal-scroll::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
+  .horizontal-scroll-item {
+    display: inline-block;
+    white-space: normal;
+  }
 }

@@ -14,12 +14,20 @@ interface Outfit {
   image: string;
 }
 
+interface ClosetItem {
+  id: string;
+  name: string;
+  category: string;
+  image: string;
+}
+
 interface OutfitContextType {
   outfits: Outfit[];
   currentMood: string;
   setCurrentMood: (mood: string) => void;
-  virtualCloset: string[];
-  addToVirtualCloset: (item: string) => void;
+  virtualCloset: ClosetItem[];
+  addItemToCloset: (item: ClosetItem) => void;
+  getClosetItemsByCategory: (category: string) => ClosetItem[];
   generateOutfit: (occasion: string) => void;
   isGenerating: boolean;
 }
@@ -102,14 +110,52 @@ const sampleOutfits: Outfit[] = [
   }
 ];
 
+// Sample closet items
+const sampleClosetItems: ClosetItem[] = [
+  {
+    id: "closet-1",
+    name: "White T-shirt",
+    category: "tops",
+    image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    id: "closet-2",
+    name: "Blue Oxford Shirt",
+    category: "tops",
+    image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    id: "closet-3",
+    name: "Dark Wash Jeans",
+    category: "bottoms",
+    image: "https://images.unsplash.com/photo-1542272604-787c3835535d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    id: "closet-4",
+    name: "White Sneakers",
+    category: "shoes",
+    image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    id: "closet-5",
+    name: "Silver Watch",
+    category: "accessories",
+    image: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+  }
+];
+
 export const OutfitProvider = ({ children }: { children: ReactNode }) => {
   const [outfits, setOutfits] = useState<Outfit[]>(sampleOutfits);
   const [currentMood, setCurrentMood] = useState<string>("casual");
-  const [virtualCloset, setVirtualCloset] = useState<string[]>([]);
+  const [virtualCloset, setVirtualCloset] = useState<ClosetItem[]>(sampleClosetItems);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
 
-  const addToVirtualCloset = (item: string) => {
-    setVirtualCloset((prev) => [...prev, item]);
+  const addItemToCloset = (item: ClosetItem) => {
+    setVirtualCloset((prev) => [item, ...prev]);
+  };
+
+  const getClosetItemsByCategory = (category: string) => {
+    return virtualCloset.filter(item => item.category === category);
   };
 
   const generateOutfit = (occasion: string) => {
@@ -151,7 +197,8 @@ export const OutfitProvider = ({ children }: { children: ReactNode }) => {
         currentMood,
         setCurrentMood,
         virtualCloset,
-        addToVirtualCloset,
+        addItemToCloset,
+        getClosetItemsByCategory,
         generateOutfit,
         isGenerating
       }}

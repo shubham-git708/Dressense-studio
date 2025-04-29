@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { OutfitProvider } from "@/context/OutfitContext";
 import { Navigation } from "@/components/Navigation";
 import { MoodSelector } from "@/components/MoodSelector";
@@ -11,18 +11,28 @@ import { AIStats } from "@/components/AIStats";
 import { Footer } from "@/components/Footer";
 import { Camera } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { setupScrollAnimations } from "@/utils/scrollAnimation";
 
 const Index = () => {
+  // Initialize scroll animations when component mounts
+  useEffect(() => {
+    const cleanup = setupScrollAnimations();
+    return cleanup;
+  }, []);
+
   return (
     <OutfitProvider>
       <div className="min-h-screen bg-outfit-white">
         <Navigation />
         
         {/* Fullwidth hero banner with large, high-quality image */}
-        <div className="w-full h-[70vh] bg-cover bg-center relative" 
-             style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80")' }}>
+        <div 
+          className="w-full h-[70vh] bg-cover bg-center relative scroll-parallax" 
+          data-speed="0.1"
+          style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80")' }}
+        >
           <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-            <div className="text-center max-w-3xl mx-auto px-4 text-white animate-fade-in">
+            <div className="text-center max-w-3xl mx-auto px-4 text-white scroll-fade">
               <h1 className="text-4xl md:text-6xl font-display font-bold mb-4 leading-tight">
                 Your AI Stylist, Tailored to Your Body
               </h1>
@@ -36,7 +46,7 @@ const Index = () => {
         <main className="container mx-auto px-4 py-12">
           {/* Main content tabs */}
           <Tabs defaultValue="stylist" className="w-full">
-            <TabsList className="w-full max-w-lg mx-auto grid grid-cols-4 mb-8">
+            <TabsList className="w-full max-w-lg mx-auto grid grid-cols-4 mb-8 scroll-fade">
               <TabsTrigger value="stylist">AI Stylist</TabsTrigger>
               <TabsTrigger value="mood">Your Mood</TabsTrigger>
               <TabsTrigger value="outfits">Outfits</TabsTrigger>
@@ -44,35 +54,35 @@ const Index = () => {
             </TabsList>
             
             <TabsContent value="stylist">
-              <div className="animate-fade-in mb-16">
+              <div className="scroll-fade mb-16">
                 <BodyImageUploader />
               </div>
-              <div className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
+              <div className="scroll-fade" style={{ animationDelay: "0.2s" }}>
                 <AIStats />
               </div>
             </TabsContent>
             
             <TabsContent value="mood">
-              <div className="animate-fade-in">
+              <div className="scroll-fade">
                 <MoodSelector />
               </div>
             </TabsContent>
             
             <TabsContent value="outfits">
-              <div className="animate-fade-in">
+              <div className="scroll-fade">
                 <OutfitRecommendations />
               </div>
             </TabsContent>
             
             <TabsContent value="closet">
-              <div className="animate-fade-in">
+              <div className="scroll-fade">
                 <VirtualCloset />
               </div>
             </TabsContent>
           </Tabs>
           
           {/* Extension Promo - below tabs */}
-          <div className="animate-fade-in mt-16" style={{ animationDelay: "0.4s" }}>
+          <div className="scroll-slide mt-16" style={{ animationDelay: "0.4s" }}>
             <ExtensionPromo />
           </div>
         </main>
