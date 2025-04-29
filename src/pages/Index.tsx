@@ -90,7 +90,7 @@ const Index = () => {
         <Footer />
         
         {/* Floating Action Button with Animation */}
-        <button className="floating-action-btn animate-bounce bg-[#9b87f5] hover:bg-[#8B5CF6]">
+        <button className="floating-action-btn animate-bounce bg-[#9b87f5] hover:bg-[#8B5CF6] fixed bottom-6 right-6 p-4 rounded-full shadow-lg text-white z-50">
           <Camera size={24} />
         </button>
       </div>
